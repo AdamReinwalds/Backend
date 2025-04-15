@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen(options =>
     options.ExampleFilters();
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Version = "v1",
+        Version = "v1.1",
         Title = "Alpha Backoffice API Documentation",
         Description = "Web API",
     });

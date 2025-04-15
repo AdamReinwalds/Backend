@@ -12,7 +12,6 @@ public class ClientsController(IClientService clientService) : ControllerBase
 {
     private readonly IClientService _clientService = clientService;
 
-
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
