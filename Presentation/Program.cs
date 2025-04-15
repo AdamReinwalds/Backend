@@ -73,7 +73,6 @@ app.UseRewriter(new RewriteOptions().AddRedirect("^$", "swagger"));
 app.UseHttpsRedirection();
 app.UseMiddleware<DefaultApiKeyMiddleWare>();
 
-app.UseCors("AllowReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 
