@@ -18,7 +18,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -43,6 +44,28 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Title = "Alpha Backoffice API Documentation",
         Description = "Web API",
+    });
+    options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Description = "API Key needed to access the endpoints. Example: 'your-api-key'",
+        In = ParameterLocation.Header,
+        Name = "x-api-key",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKeyScheme"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            new List<string>()
+        }
     });
 });
 
@@ -71,6 +94,8 @@ app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "Web API"));
 
 app.UseRewriter(new RewriteOptions().AddRedirect("^$", "swagger"));
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
+
 app.UseMiddleware<DefaultApiKeyMiddleWare>();
 
 app.UseAuthentication();
