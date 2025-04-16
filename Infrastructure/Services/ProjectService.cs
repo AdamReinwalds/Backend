@@ -110,7 +110,7 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     public async Task<bool> DeleteProjectAsync(string id)
     {
         var result = await _projectRepository.DeleteAsync(x => x.Id == id);
-        await UpdateCacheAsync();
+        //await UpdateCacheAsync();
         return result;
     }
     private async Task<IEnumerable<Project>> UpdateCacheAsync()
