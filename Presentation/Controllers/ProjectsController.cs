@@ -71,7 +71,14 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
     [SwaggerResponse(404, "Project not found.")]
     public async Task<IActionResult> Delete(string id)
     {
-        var result = await _projectService.DeleteProjectAsync(id);
-        return result ? NoContent() : NotFound();
+        try
+        {
+            var result = await _projectService.DeleteProjectAsync(id);
+            return result ? NoContent() : NotFound();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
