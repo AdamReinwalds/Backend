@@ -23,18 +23,9 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(formData);
-        try
-        {
-            var result = await _projectService.CreateProjectAsync(formData);
-            return Ok();
-        }
-        catch (Exception ex){
-            Console.WriteLine("🔥 ERROR in CreateProject: " + ex.Message);
-            Console.WriteLine(ex.StackTrace);
-            return StatusCode(500, "Something went wrong: " + ex.Message);
-        }
-        //var result = await _projectService.CreateProjectAsync(formData);
-        //return result ? Ok() : BadRequest("Project creation failed");
+
+        var result = await _projectService.CreateProjectAsync(formData);
+        return result ? Ok(result) : BadRequest("Project creation failed");
     }
 
     [HttpGet]
@@ -71,7 +62,7 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
             return BadRequest(formData);
 
         var result = await _projectService.UpdateProjectAsync(formData);
-        return result ? Ok() : NotFound();
+        return result ? Ok(result) : NotFound();
     }
 
     [HttpDelete("{id}")]
@@ -81,6 +72,6 @@ public class ProjectsController(IProjectService projectService) : ControllerBase
     public async Task<IActionResult> Delete(string id)
     {
         var result = await _projectService.DeleteProjectAsync(id);
-        return result ? Ok() : NotFound();
+        return result ? Ok(result) : NotFound();
     }
 }
