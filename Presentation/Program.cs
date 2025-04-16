@@ -31,6 +31,8 @@ builder.Services.AddControllers()
             DateTimeFormat = "yyyy-MM-dd" 
         });
     });
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddOpenApi();

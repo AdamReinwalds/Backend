@@ -14,8 +14,8 @@ public class AddProjectDataExample : IExamplesProvider<AddProjectForm>
         StartDate = new DateTime(2025, 5, 1),
         EndDate = new DateTime(2025, 9, 30),
         Budget = 50000m,
-        ClientId = "client-001",
-        UserId = "user-abc123"
+        ClientId = "423b8e58-f690-41ee-80ae-4b4d5f12bdf8",
+        UserId = "8b3ca3a9-6cc7-4be7-a1fe-f1ab470ebbac"
 
     };
 
