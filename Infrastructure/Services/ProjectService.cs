@@ -110,12 +110,17 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     public async Task<bool> DeleteProjectAsync(string id)
     {
         var result = await _projectRepository.DeleteAsync(x => x.Id == id);
-        //await UpdateCacheAsync();
+        await UpdateCacheAsync();
         return result;
     }
     private async Task<IEnumerable<Project>> UpdateCacheAsync()
     {
-        var projects = await _projectRepository.GetAllAsync();
+        var projects = await _projectRepository.GetAllAsync(orderByDescending: true,
+            sortBy: x => x.Created,
+            filterBy: null,
+            i => i.User,
+            i => i.Client,
+            i => i.Status);
         var models = projects.Select(ProjectFactory.ToModel).ToList();
         _cacheHandler.SetCache(_cacheKey, models);
         return models;
